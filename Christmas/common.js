@@ -6,7 +6,35 @@
  *  Lekérjük a tableselectort, és regisztrálunk egy change eseménykezelőt!
  */
 
-
+const tableselector= document.querySelector("#tableselector")
+tableselector.addEventListener('change', changeBasedOnRadio)
+ 
+function changeBasedOnRadio(e){
+ 
+    /**
+     * @type {HTMLInputElement}
+     */
+    const radio = e.target
+ 
+    const hmtlsection = document.getElementById("htmlsection")
+    const jssection = document.getElementById("jssection")
+ 
+    if(radio.checked == true){
+ 
+        const value = radio.value
+ 
+        if(value == "htmlsection"){
+            hmtlsection.classList.remove('hide')
+            jssection.classList.add('hide')
+        }
+        else{
+            jssection.classList.remove('hide')
+            hmtlsection.classList.add('hide')
+        }
+ 
+    }
+}
+ 
 
 /**
  * Ez a függvény a javascript legvégén fut le, amikor már minden elem betöltött.
@@ -19,8 +47,12 @@
  * @returns {void}
  */
 function initCheckbox(checkboxElem){
-
+    changeCheckboxValue(checkboxElem);
+    checkboxElem.addEventListener("change", e => {
+        changeCheckboxValue(e.target);
+    });
 }
+ 
 
 /**
  * 
@@ -35,8 +67,16 @@ function initCheckbox(checkboxElem){
  * @returns {void}
  */
 function changeCheckboxValue(checkbox){
-
+    const form = checkbox.parentElement.parentElement;
+    const mano2 = form.querySelector("#mano2");
+    const muszak2 = form.querySelector("#muszak2");
+ 
+    const enable = checkbox.checked === true;
+ 
+    mano2.disabled = !enable;
+    muszak2.disabled = !enable;
 }
+ 
 
 /**
  * Segédfüggvény, aminek a segítségével elkérjük a htmlformon belüli 
